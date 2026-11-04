@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.spex/
+.agents/
+.claude/
+.specs-extraction/
+.acceptance-local/
