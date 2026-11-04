@@ -5,3 +5,4 @@ __pycache__/
 .claude/
 .specs-extraction/
 .acceptance-local/
+.acceptance/

@@ -1,11 +1,11 @@
 # 四步操作说明：轻量版
 
-这是从固定起点 `baseline-lite-v1` 重跑四步的操作手册：该基线仅含 HELLO-01；完成 decide/code 后，当前契约以 `docs/requirements.md` 为准。
+这是从固定起点 `baseline-lite-v2` 重跑四步的操作手册：该基线仅含 HELLO-01；完成 decide/code 后，当前契约以 `docs/requirements.md` 为准。
 
 ## 0. 准备
 
 ```sh
-git clone --branch baseline-lite-v1 https://github.com/yangbobo2021/spex-workflow-demo.git spex-demo-lite
+git clone --branch baseline-lite-v2 https://github.com/yangbobo2021/spex-workflow-demo.git spex-demo-lite
 cd spex-demo-lite
 git switch -c test/lite-run-01
 python3 -B -m unittest discover -s tests -v
@@ -16,10 +16,10 @@ python3 -B -m unittest discover -s tests -v
 实测 GoodMe 初次克隆使用仓库默认分支，不沿用本地分支。安装包前，必须在服务器仓库核对并切到轻量基线：
 
 ```sh
-git fetch origin tag baseline-lite-v1
-git switch -c test/lite-run-01 baseline-lite-v1
+git fetch origin tag baseline-lite-v2
+git switch -c test/lite-run-01 baseline-lite-v2
 git rev-parse HEAD
-# 应为 5c627088aa9473b3ea383736e9131564563b6283
+# 应与 git rev-parse baseline-lite-v2 的结果相同
 ```
 
 可把这些明确要求交给远程 `/code` 准备任务。若已经有安装配置或其他未提交改动，先检查并保留；不要强制 reset。不能只凭本地目录和分支名称判断服务器基线。
@@ -27,6 +27,8 @@ git rev-parse HEAD
 沿用本轮版本：SPEX `0.9.0-beta.27`，`merico-ai/extract-specs 0.3.0`，`sublang/playbooks 18.1.3`（decide/code/review），`yangbobo2021/app-delivery-acceptance 0.4.17`。在远程项目安装包，确认角色和 Agent ready，独立 reviewer 使用独立 Player。
 
 实际执行端需要有效 Git 身份；临时测试可用仓库局部身份 `SPEX Workflow Demo <spex-workflow-demo@example.invalid>`，不改全局配置。安装生成的 `.gitattributes`、`spex.yaml`、`spex.lock` 经检查后单独提交，保持提取起步时工作区干净。准备工作可交给 `/code`，但不计作下面的正式功能实现测试。
+
+`tests/__init__.py` 是空包标记，用于兼容验收准备阶段带显式顶层目录的 unittest 发现；不增加测试或业务要求。`baseline-lite-v1` 保留作历史，后续请用 v2，避免重复遇到导入错误。
 
 ## 1. 提取规格
 
