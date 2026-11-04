@@ -13,6 +13,17 @@ python3 -B -m unittest discover -s tests -v
 
 在 SPEX 中把项目加入 `spex.sublang.xyz` 的 workshop 群组，然后 **Open on GoodMe workshop**，后续只操作 GoodMe workshop 下的项目。
 
+实测 GoodMe 初次克隆使用仓库默认分支，不沿用本地分支。安装包前，必须在服务器仓库核对并切到轻量基线：
+
+```sh
+git fetch origin tag baseline-lite-v1
+git switch -c test/lite-run-01 baseline-lite-v1
+git rev-parse HEAD
+# 应为 5c627088aa9473b3ea383736e9131564563b6283
+```
+
+可把这些明确要求交给远程 `/code` 准备任务。若已经有安装配置或其他未提交改动，先检查并保留；不要强制 reset。不能只凭本地目录和分支名称判断服务器基线。
+
 沿用本轮版本：SPEX `0.9.0-beta.27`，`merico-ai/extract-specs 0.3.0`，`sublang/playbooks 18.1.3`（decide/code/review），`yangbobo2021/app-delivery-acceptance 0.4.17`。在远程项目安装包，确认角色和 Agent ready，独立 reviewer 使用独立 Player。
 
 实际执行端需要有效 Git 身份；临时测试可用仓库局部身份 `SPEX Workflow Demo <spex-workflow-demo@example.invalid>`，不改全局配置。安装生成的 `.gitattributes`、`spex.yaml`、`spex.lock` 经检查后单独提交，保持提取起步时工作区干净。准备工作可交给 `/code`，但不计作下面的正式功能实现测试。
