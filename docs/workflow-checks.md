@@ -1,11 +1,11 @@
 # 四步操作说明：轻量版
 
-这是从固定起点 `baseline-lite-v2` 重跑四步的操作手册：该基线仅含 HELLO-01；完成 decide/code 后，当前契约以 `docs/requirements.md` 为准。
+这是从固定起点 `baseline-lite-v3` 重跑四步的操作手册：该基线仅含 HELLO-01；完成 decide/code 后，当前契约以 `docs/requirements.md` 为准。
 
 ## 0. 准备
 
 ```sh
-git clone --branch baseline-lite-v2 https://github.com/yangbobo2021/spex-workflow-demo.git spex-demo-lite
+git clone --branch baseline-lite-v3 https://github.com/yangbobo2021/spex-workflow-demo.git spex-demo-lite
 cd spex-demo-lite
 git switch -c test/lite-run-01
 python3 -B -m unittest discover -s tests -v
@@ -16,10 +16,10 @@ python3 -B -m unittest discover -s tests -v
 实测 GoodMe 初次克隆使用仓库默认分支，不沿用本地分支。安装包前，必须在服务器仓库核对并切到轻量基线：
 
 ```sh
-git fetch origin tag baseline-lite-v2
-git switch -c test/lite-run-01 baseline-lite-v2
+git fetch origin tag baseline-lite-v3
+git switch -c test/lite-run-01 baseline-lite-v3
 git rev-parse HEAD
-# 应与 git rev-parse baseline-lite-v2 的结果相同
+# 应与 git rev-parse baseline-lite-v3 的结果相同
 ```
 
 可把这些明确要求交给远程 `/code` 准备任务。若已经有安装配置或其他未提交改动，先检查并保留；不要强制 reset。不能只凭本地目录和分支名称判断服务器基线。
@@ -28,7 +28,7 @@ git rev-parse HEAD
 
 实际执行端需要有效 Git 身份；临时测试可用仓库局部身份 `SPEX Workflow Demo <spex-workflow-demo@example.invalid>`，不改全局配置。安装生成的 `.gitattributes`、`spex.yaml`、`spex.lock` 经检查后单独提交，保持提取起步时工作区干净。准备工作可交给 `/code`，但不计作下面的正式功能实现测试。
 
-`tests/__init__.py` 是空包标记，用于兼容验收准备阶段带显式顶层目录的 unittest 发现；不增加测试或业务要求。`baseline-lite-v1` 保留作历史，后续请用 v2，避免重复遇到导入错误。
+`tests/__init__.py` 是空包标记，用于兼容验收准备阶段带显式顶层目录的 unittest 发现；不增加测试或业务要求。旧的 `baseline-lite-v1`、`baseline-lite-v2` 标签保留作历史；后续请用 v3。v3 的原始子进程测试比较输出字节，不用 `text=True` 归一化换行。
 
 ## 1. 提取规格
 
@@ -47,13 +47,13 @@ git rev-parse HEAD
 ## 3. 实现
 
 ```text
-/code 按已审定 HELLO-02 实现 --upper，保留 HELLO-01；用真实子进程各验证一次无参数 hello 和单独 --upper 的 HELLO，断言 stdout/stderr/退出码，保留原测试。其他参数组合不新增约定。完成正常独立 review 和必要修订，不扩展功能，不推送不建 PR。简报测试结果、实现提交、复审版本和未解决问题。
+/code 按已审定 HELLO-02 实现 --upper，保留 HELLO-01；用真实子进程各验证一次无参数 hello 和单独 --upper 的 HELLO，以二进制捕获 stdout/stderr（不启用 text=True），断言原始字节、平台标准换行及退出码，保留原测试。其他参数组合不新增约定。完成正常独立 review 和必要修订，不扩展功能，不推送不建 PR。简报测试结果、实现提交、复审版本和未解决问题。
 ```
 
 ## 4. 验收
 
 ```text
-/acceptance-orchestrate 读取 docs/requirements.md，仅针对 HELLO-02 生成并选中一个场景：实际执行 python3 hello.py --upper，预期 stdout 为 HELLO 加换行、stderr 空、退出码0。只执行这一个场景，不收集覆盖率，其他场景保留未执行。正常完成独立复审并导出报告和证据；允许隔离执行目录和用例，不改产品或原始需求，不推送不建 PR。直接完成流程，摘要简短，优先列报告和证据路径。
+/acceptance-orchestrate 读取 docs/requirements.md，仅针对 HELLO-02 生成并选中一个场景：实际执行 python3 hello.py --upper，在 GoodMe Linux 上以二进制捕获核对 stdout 字节为 48 45 4c 4c 4f 0a（HELLO 加 LF）、stderr 零字节、退出码0；不使用 text=True。只执行这一个场景，不收集覆盖率，其他场景保留未执行。正常完成独立复审并导出报告和证据；允许隔离执行目录和用例，不改产品或原始需求，不推送不建 PR。直接完成流程，摘要简短，优先列报告和证据路径。
 ```
 
 ## 完成判据
