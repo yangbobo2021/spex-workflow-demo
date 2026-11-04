@@ -1,6 +1,6 @@
 # SPEX 四工作流轻量示例
 
-一个只输出 `hello` 的 Python 程序，一条当前需求，一次真实子进程测试。它用于检查工作流能否运行完，不用于全面评测。
+起点 `baseline-lite-v1` 是一个只输出 `hello` 的 Python 程序，仅含一条需求 HELLO-01 和一次真实子进程测试；当前需求以 [docs/requirements.md](docs/requirements.md) 为准。它用于检查工作流能否运行完，不用于全面评测。
 
 ```sh
 python3 hello.py

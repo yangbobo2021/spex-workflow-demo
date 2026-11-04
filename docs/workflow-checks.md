@@ -1,6 +1,6 @@
 # 四步操作说明：轻量版
 
-这是未来变更的操作手册；当前产品契约只有 `docs/requirements.md` 的 HELLO-01。
+这是从固定起点 `baseline-lite-v1` 重跑四步的操作手册：该基线仅含 HELLO-01；完成 decide/code 后，当前契约以 `docs/requirements.md` 为准。
 
 ## 0. 准备
 
